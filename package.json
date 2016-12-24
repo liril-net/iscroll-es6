@@ -12,6 +12,13 @@
     "IScroll"
   ],
   "author": "liril <god@liril.net>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liril-net/iscroll-es6.git"
+  },
+  "bugs": {
+    "url": "https://github.com/liril-net/iscroll-es6/issues"
+  },
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.0.0",
