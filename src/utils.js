@@ -397,7 +397,6 @@ _.getRect = (el) => {
       height: rect.height
     }
   }
-  console.log(window.getComputedStyle(el).height)
   return {
     top: el.offsetTop,
     left: el.offsetLeft,
