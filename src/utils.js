@@ -204,17 +204,29 @@ const _hasClassList = document.createElement('div').classList !== undefined
  * @return {Boolean}       是否包含
  */
 _.hasClass = (e, c) =>
-  (_hasClassList ? e.classList.contains(c) : (new RegExp(`(^|\\s)${ c }($|\\s)`)).test(e.className))
+  (_hasClassList ?
+    e.classList.contains(c) :
+    (new RegExp(`(^|\\s)${ c }($|\\s)`))
+    .test(e.className)
+  )
 
 /**
- * 为某个元素增加类，为了删除无用的空格，最后多做了一步
+ * 为某个元素增加类
  * @param  {Dom Element} e  要增加类的元素
  * @param  {...String}   cs 要增加的类名
  */
 _.addClass = (e, ...cs) =>
-  (!_hasClassList ? e.classList.add(...cs) : (cs.forEach(c => (
-    e.className += e.className.indexOf(c) === -1 ? ` ${ c }` : ''
-  )) || _.removeClass(e, '')))
+  (_hasClassList ?
+    e.classList.add(...cs) :
+    (e.className = cs
+      .filter(c => !!c)
+      .reduce((prev, cur) =>
+        (prev.indexOf(cur) === -1 ?
+          `${ prev }${ prev.length ? ' ' : '' }${ cur }` :
+          prev
+        ), e.className)
+    )
+  )
 
 /**
  * 为某个元素删除类
@@ -222,11 +234,15 @@ _.addClass = (e, ...cs) =>
  * @param  {...String}   c 要删除的类名
  */
 _.removeClass = (e, ...cs) =>
-  (!_hasClassList ? e.classList.remove(...cs) : (e.className = e
-    .className
-    .split(/\s+/)
-    .filter(a => cs.indexOf(a) === -1)
-    .join(' ')))
+  (_hasClassList ?
+    e.classList.remove(...cs) :
+    (e.className = e
+      .className
+      .split(/\s+/)
+      .filter(a => cs.indexOf(a) === -1)
+      .join(' ')
+    )
+  )
 
 /**
  * 获取元素距离页面的距离
