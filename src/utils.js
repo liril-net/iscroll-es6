@@ -220,11 +220,11 @@ _.addClass = (e, ...cs) =>
     e.classList.add(...cs) :
     (e.className = cs
       .filter(c => !!c)
-      .reduce((prev, cur) =>
-        (prev.indexOf(cur) === -1 ?
-          `${ prev }${ prev.length ? ' ' : '' }${ cur }` :
-          prev
-        ), e.className)
+      .reduce((prev, cur) => (
+        (new RegExp(`(^|\\s)${ cur }($|\\s)`)).test(prev) ?
+        prev :
+        `${ prev }${ prev.length ? ' ' : '' }${ cur }`
+      ), e.className)
     )
   )
 
